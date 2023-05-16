@@ -1,6 +1,7 @@
 import { Button } from "flowbite-react";
 import RatingImg from "../../assets/rating.jpg";
 import "./HomePage.css";
+import { Link } from "react-router-dom";
 const HomePage = () => {
   return (
     <div className="flex flex-col md:flex-row">
@@ -24,7 +25,11 @@ const HomePage = () => {
             massa a, tincidunt metus. Nullam ultricies, mi vitae aliquet
             ultricies, ex nisi hendrerit tellus, vel congue dui ipsum ut ligula
           </p>
-          <Button className="bg-red-400 mt-8">Get Started</Button>
+          <Link to="/rating">
+            <Button className="bg-red-400 hover:bg-red-500 mt-8">
+              Get Started
+            </Button>
+          </Link>
         </div>
       </div>
     </div>

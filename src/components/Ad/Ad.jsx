@@ -4,7 +4,7 @@ const Ad = () => {
       <img
         src="https://flowbite.com/docs/images/carousel/carousel-1.svg"
         alt="..."
-        className="h-full object-cover rounded"
+        className="h-full w-full object-cover rounded"
       />
     </div>
   );

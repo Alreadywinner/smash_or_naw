@@ -20,12 +20,12 @@ const Carousel = () => {
     },
   ];
   return (
-    <div className="h-56 sm:h-64 xl:h-80 2xl:h-96">
+    <div>
       <FlowCarousel showThumbs={false}>
         {imagesData &&
           imagesData?.map((element) => {
             return (
-              <div key={element.src} className="h-56 sm:h-64 xl:h-80 2xl:h-96">
+              <div key={element.src} className="h-full">
                 <img
                   src={element.src}
                   alt="..."

@@ -20,16 +20,16 @@ const Carousel = () => {
     },
   ];
   return (
-    <div>
+    <div className="rounded">
       <FlowCarousel showThumbs={false}>
         {imagesData &&
           imagesData?.map((element) => {
             return (
-              <div key={element.src} className="h-full">
+              <div key={element.src} className="h-full rounded">
                 <img
                   src={element.src}
                   alt="..."
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover rounded"
                 />
               </div>
             );

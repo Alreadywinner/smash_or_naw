@@ -5,8 +5,8 @@ import Comments from "../../components/Comments/comments";
 const RatingPage = () => {
   return (
     <div className="flex gap-5 m-2 flex-col">
-      <div className="flex flex-col md:flex-row gap-4 h-3/4">
-        <div className="md:w-4/5 w-100 bg-white-500 shadow-lg shadow-white-500/50">
+      <div className="flex flex-col md:flex-row gap-4 h-3/4 rounded">
+        <div className="md:w-4/5 w-100 bg-white-500 shadow-lg shadow-white-500/50 rounded">
           <Carousel />
         </div>
         <div className="bg-white-500 shadow-lg shadow-white-500/50 md:w-1/5 w-100 rounded">

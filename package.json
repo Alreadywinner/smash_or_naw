@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "frontend": "cd frontend && yarn dev",
-    "backend": "cd backend && yarn start"
+    "backend": "cd backend && yarn start",
+    "front:deploy": "cd frontend && yarn deploy"
   },
   "repository": {
     "type": "git",

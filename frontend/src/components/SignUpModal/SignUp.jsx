@@ -1,5 +1,6 @@
 import { Button, Checkbox, Label, Modal, TextInput } from "flowbite-react";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 
 const SignUp = ({ onClose, onClick, onLoginClick, visible }) => {
   return (
@@ -45,12 +46,12 @@ const SignUp = ({ onClose, onClick, onLoginClick, visible }) => {
             <Checkbox id="agree" />
             <Label htmlFor="agree">
               I agree with the &nbsp;
-              <a
-                href="/"
+              <Link
+                to={"/terms-and-conditions"}
                 className="text-blue-600 hover:underline dark:text-blue-500"
               >
                 terms and conditions
-              </a>
+              </Link>
             </Label>
           </div>
           <Button

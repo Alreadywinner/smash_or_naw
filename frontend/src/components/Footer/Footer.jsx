@@ -17,22 +17,37 @@ const Footer = () => {
             <div>
               <FlowFooter.Title title="about" />
               <FlowFooter.LinkGroup col={true}>
-                <FlowFooter.Link href="/">About Us</FlowFooter.Link>
-                <FlowFooter.Link href="/">Contact Us</FlowFooter.Link>
+                <FlowFooter.Link href="/" className="cursor-pointer">
+                  About Us
+                </FlowFooter.Link>
+                <FlowFooter.Link href="/" className="cursor-pointer">
+                  Contact Us
+                </FlowFooter.Link>
               </FlowFooter.LinkGroup>
             </div>
             <div>
               <FlowFooter.Title title="Follow us" />
               <FlowFooter.LinkGroup col={true}>
-                <FlowFooter.Link href="/">Github</FlowFooter.Link>
-                <FlowFooter.Link href="/">Discord</FlowFooter.Link>
+                <FlowFooter.Link href="/" className="cursor-pointer">
+                  Github
+                </FlowFooter.Link>
+                <FlowFooter.Link href="/" className="cursor-pointer">
+                  Discord
+                </FlowFooter.Link>
               </FlowFooter.LinkGroup>
             </div>
             <div>
               <FlowFooter.Title title="Legal" />
               <FlowFooter.LinkGroup col={true}>
-                <FlowFooter.Link href="/">Privacy Policy</FlowFooter.Link>
-                <FlowFooter.Link href="/">Terms & Conditions</FlowFooter.Link>
+                <FlowFooter.Link href="/" className="cursor-pointer">
+                  Privacy Policy
+                </FlowFooter.Link>
+                <FlowFooter.Link
+                  href="/terms-and-conditions"
+                  className="cursor-pointer"
+                >
+                  Terms & Conditions
+                </FlowFooter.Link>
               </FlowFooter.LinkGroup>
             </div>
           </div>

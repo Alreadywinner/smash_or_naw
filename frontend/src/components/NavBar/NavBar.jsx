@@ -37,7 +37,10 @@ const NavBar = () => {
           <Navbar.Link className="text-black md:hover:text-red-400" href="/">
             Pricing
           </Navbar.Link>
-          <Navbar.Link className="text-black md:hover:text-red-400" href="/">
+          <Navbar.Link
+            className="text-black md:hover:text-red-400"
+            href="/contact"
+          >
             Contact
           </Navbar.Link>
           <Navbar.Link

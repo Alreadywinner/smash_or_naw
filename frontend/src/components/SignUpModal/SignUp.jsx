@@ -48,7 +48,7 @@ const SignUp = ({ onClose, onClick, onLoginClick, visible }) => {
               I agree with the &nbsp;
               <Link
                 to={"/terms-and-conditions"}
-                className="text-blue-600 hover:underline dark:text-blue-500"
+                className="text-blue-600 hover:underline"
               >
                 terms and conditions
               </Link>

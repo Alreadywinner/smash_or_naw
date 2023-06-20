@@ -1,33 +1,49 @@
-import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
-import { Carousel as FlowCarousel } from "react-responsive-carousel";
+import 'react-responsive-carousel/lib/styles/carousel.min.css'; // requires a loader
+import { Carousel as FlowCarousel } from 'react-responsive-carousel';
+import PropTypes from 'prop-types';
+import { useState } from 'react';
+import { Button } from 'flowbite-react';
 
-const Carousel = () => {
-  const imagesData = [
-    {
-      src: "https://images.unsplash.com/photo-1682686579976-879b74d6d7ea?ixlib=rb-4.0.3&ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1167&q=80",
-    },
-    {
-      src: "https://flowbite.com/docs/images/carousel/carousel-2.svg",
-    },
-    {
-      src: "https://flowbite.com/docs/images/carousel/carousel-3.svg",
-    },
-    {
-      src: "https://flowbite.com/docs/images/carousel/carousel-4.svg",
-    },
-    {
-      src: "https://flowbite.com/docs/images/carousel/carousel-5.svg",
-    },
-  ];
+const Carousel = ({ postsData }) => {
+  const [currentPostIndex, setCurrentPostIndex] = useState(0);
+  const imagesData = postsData;
+  const handlePrevious = () => {
+    setCurrentPostIndex((prevIndex) =>
+      prevIndex === 0 ? imagesData.length - 1 : prevIndex - 1,
+    );
+  };
+
+  const handleNext = () => {
+    setCurrentPostIndex((prevIndex) =>
+      prevIndex === imagesData.length - 1 ? 0 : prevIndex + 1,
+    );
+  };
   return (
     <>
+      <div className="flex justify-between mt-5 mb-5 p-5">
+        <Button
+          className="bg-red-400 text-white hover:bg-red-500"
+          onClick={handlePrevious}
+        >
+          Previous Post
+        </Button>
+        <h1 className="text-3xl font-bold">
+          {imagesData[currentPostIndex]?.post_name}
+        </h1>
+        <Button
+          className="bg-red-400 text-white hover:bg-red-500"
+          onClick={handleNext}
+        >
+          Next Post
+        </Button>
+      </div>
       <FlowCarousel showThumbs={false}>
         {imagesData &&
-          imagesData?.map((element) => {
+          imagesData[currentPostIndex]?.posts_data?.map((element) => {
             return (
-              <div key={element.src} className="h-full w-full">
+              <div key={element} className="h-full w-full">
                 <img
-                  src={element.src}
+                  src={element}
                   alt="..."
                   className="w-full md:h-[40rem] h-96 object-cover rounded"
                 />
@@ -118,6 +134,10 @@ const Carousel = () => {
       </div>
     </>
   );
+};
+
+Carousel.propTypes = {
+  postsData: PropTypes.array,
 };
 
 export default Carousel;

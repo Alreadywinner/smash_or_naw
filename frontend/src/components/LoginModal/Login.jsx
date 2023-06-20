@@ -1,12 +1,72 @@
-import { Button, Label, Modal, TextInput } from "flowbite-react";
-import PropTypes from "prop-types";
+import { Button, Label, Modal, TextInput } from 'flowbite-react';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { useLoginMutation } from '../../redux/slices/userApiSlice';
+import { setCredentials } from '../../redux/slices/authSlice';
+import PropTypes from 'prop-types';
+import Toast from '../Toast/Toast';
+import { useEffect, useRef, useState } from 'react';
+import Loader from '../Loader/Loader';
 
-const Login = ({ onClose, onClick, onSignUpClick, visible }) => {
+const Login = ({ onClose, onSignUpClick, visible }) => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const emailRef = useRef();
+  const passwordRef = useRef();
+
+  const [showToast, setShowToast] = useState('');
+
+  const [login, { isLoading }] = useLoginMutation();
+
+  const { userInfo } = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    if (userInfo) {
+      navigate('/rating');
+    }
+  }, [navigate, userInfo]);
+
+  const handleClick = async (e) => {
+    e.preventDefault();
+    const email = emailRef.current.value.trim();
+    const password = passwordRef.current.value.trim();
+    if (password === '') {
+      setShowToast(`Passwords don't match`);
+      return;
+    }
+    if (email) {
+      const emailReg =
+        // eslint-disable-next-line no-useless-escape
+        /^(([^<>()\[\]\\.,;:\s@”]+(\.[^<>()\[\]\\.,;:\s@”]+)*)|(“.+”))@((\[[0–9]{1,3}\.[0–9]{1,3}\.[0–9]{1,3}\.[0–9]{1,3}])|(([a-zA-Z\-0–9]+\.)+[a-zA-Z]{2,}))$/;
+      if (!emailReg.test(email)) {
+        setShowToast(`Please Enter a valid email`);
+        return;
+      }
+    }
+    try {
+      const res = await login({ email, password }).unwrap();
+      // we are using unwrap because login returns a promise so un wrapping it will make it easier to use
+      onClose();
+      navigate('/rating');
+      dispatch(setCredentials({ ...res }));
+    } catch (err) {
+      console.log('In error');
+      setShowToast(err?.data?.message || err.error);
+    }
+  };
+
+  const onToastClick = () => {
+    setShowToast('');
+  };
+
   return (
     <Modal show={visible} onClose={onClose}>
+      {showToast !== '' && (
+        <Toast message={showToast} onClose={onToastClick} error={true} />
+      )}
       <Modal.Header>Login</Modal.Header>
       <Modal.Body>
-        <form className="flex flex-col gap-4">
+        <form className="flex flex-col gap-4" onSubmit={handleClick}>
           <div>
             <div className="mb-2 block">
               <Label htmlFor="email2" value="Your email" />
@@ -15,6 +75,7 @@ const Login = ({ onClose, onClick, onSignUpClick, visible }) => {
               id="email2"
               type="email"
               placeholder="name@gmail.com"
+              ref={emailRef}
               required={true}
               shadow={true}
             />
@@ -26,6 +87,7 @@ const Login = ({ onClose, onClick, onSignUpClick, visible }) => {
             <TextInput
               id="password2"
               type="password"
+              ref={passwordRef}
               required={true}
               shadow={true}
             />
@@ -33,9 +95,8 @@ const Login = ({ onClose, onClick, onSignUpClick, visible }) => {
           <Button
             type="submit"
             className="bg-red-400 text-white hover:bg-red-500"
-            onClick={onClick}
           >
-            Login
+            {isLoading ? <Loader /> : 'Login'}
           </Button>
         </form>
       </Modal.Body>
@@ -54,7 +115,6 @@ const Login = ({ onClose, onClick, onSignUpClick, visible }) => {
 
 Login.propTypes = {
   onClose: PropTypes.func.isRequired,
-  onClick: PropTypes.func.isRequired,
   visible: PropTypes.bool.isRequired,
   onSignUpClick: PropTypes.func.isRequired,
 };

@@ -1,8 +1,20 @@
-import { Button } from "flowbite-react";
-import RatingImg from "../../assets/rating.jpg";
-import "./HomePage.css";
-import { Link } from "react-router-dom";
+import { Button } from 'flowbite-react';
+import RatingImg from '../../assets/rating.jpg';
+import './HomePage.css';
+import { Link, useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
+import { getCookie } from '../../utils/readCookie';
 const HomePage = () => {
+  const navigate = useNavigate();
+  useEffect(() => {
+    const asyncFunc = async () => {
+      const myCookieValue = await getCookie('jwt');
+      if (myCookieValue && myCookieValue.length > 0) {
+        navigate('/rating');
+      }
+    };
+    asyncFunc();
+  }, []);
   return (
     <div className="flex flex-col md:flex-row">
       <div className="w-screen h-1/2 md:order-1 md:h-screen md:w-1/2 overflow-hidden landingPageImg">

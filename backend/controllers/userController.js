@@ -1,12 +1,14 @@
 import asyncHandler from "express-async-handler";
 import User from "../model/userModel.js";
+import Posts from "../model/postModel.js";
+import Ads from "../model/adModel.js";
 import generateToken from "../utils/generateToken.js";
 // @desc    Auth user & get token
 // @route   POST /api/users/auth
 // @access  Public
 const authUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
-  const user = await User.findOne({ email });
+  const user = await User.findOne({ email, user_type: { $ne: "admin" } });
   if (user && (await user.matchPassword(password))) {
     generateToken(res, user._id);
     res.status(201).json({
@@ -97,10 +99,38 @@ const updateUserProfile = asyncHandler(async (req, res) => {
   }
 });
 
+// @desc    fetch all Posts
+// @route   GET /api/users/posts
+// @access  Private
+const fetchAllPosts = asyncHandler(async (req, res) => {
+  const allPosts = await Posts.find({});
+  if (allPosts && allPosts.length > 0) {
+    return res.status(200).json({ allPosts });
+  } else {
+    res.status(400);
+    throw new Error("No Posts to Fetch");
+  }
+});
+
+// @desc    fetch all Posts
+// @route   GET /api/users/ads
+// @access  Private
+const fetchAllAds = asyncHandler(async (req, res) => {
+  const allAds = await Ads.find({});
+  if (allAds && allAds.length > 0) {
+    return res.status(200).json({ allAds });
+  } else {
+    res.status(400);
+    throw new Error("No Ads to Fetch");
+  }
+});
+
 export {
   authUser,
   registerUser,
   logoutUser,
   getUserProfile,
   updateUserProfile,
+  fetchAllPosts,
+  fetchAllAds,
 };

@@ -22,6 +22,7 @@ const AdPage = () => {
   });
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [formLoading, setFormLoading] = useState(false);
   const [addAd, { isLoading: addAdLoading }] = useAddAdMutation();
   const [logoutApiCall, { isLoading }] = useAdminLogoutMutation();
   const adLinkRef = useRef('');
@@ -36,6 +37,7 @@ const AdPage = () => {
     setSelectedImage(file);
   };
   const handleFileUpload = async (imageSrc) => {
+    setFormLoading(true);
     const uploadPromises = [];
     const fileDownloadURLs = [];
     const storageRef = ref(storage, `/ads/${imageSrc.name}`);
@@ -88,6 +90,7 @@ const AdPage = () => {
       adLinkRef.current.value = '';
       setSelectedImage(null);
       imageSrc = null;
+      setFormLoading(false);
     }
   };
   const handleClick = (event) => {
@@ -194,7 +197,7 @@ const AdPage = () => {
             </label>
           </div>
           <Button className="bg-red-400 hover:bg-red-500 mt-8" type="submit">
-            {addAdLoading ? <Loader /> : 'Add Ad'}
+            {addAdLoading || formLoading ? <Loader /> : 'Add Ad'}
           </Button>
         </form>
       </div>

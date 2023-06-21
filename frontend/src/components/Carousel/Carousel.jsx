@@ -40,15 +40,28 @@ const Carousel = ({ postsData }) => {
       <FlowCarousel showThumbs={false}>
         {imagesData &&
           imagesData[currentPostIndex]?.posts_data?.map((element) => {
-            return (
-              <div key={element} className="h-full w-full">
-                <img
-                  src={element}
-                  alt="..."
-                  className="w-full md:h-[40rem] h-96 object-cover rounded"
-                />
-              </div>
-            );
+            if (element.includes('.mp4') || element.includes('.webm')) {
+              return (
+                <div key={element} className="h-full w-full">
+                  <video
+                    src={element}
+                    alt="..."
+                    className="w-full md:h-[40rem] h-96 object-cover rounded"
+                    controls
+                  />
+                </div>
+              );
+            } else {
+              return (
+                <div key={element} className="h-full w-full">
+                  <img
+                    src={element}
+                    alt="..."
+                    className="w-full md:h-[40rem] h-96 object-cover rounded"
+                  />
+                </div>
+              );
+            }
           })}
       </FlowCarousel>
       <div className="flex items-center justify-center p-5">

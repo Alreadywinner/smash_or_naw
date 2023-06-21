@@ -24,6 +24,7 @@ const AddPostForm = () => {
   const fileInputRef = useRef(null);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [formLoading, setFormLoading] = useState(false);
   const [logoutApiCall, { isLoading }] = useAdminLogoutMutation();
   const [addPost, { isLoading: addPostLoading }] = useAddPostMutation();
   const handleFileUpload = async (e) => {
@@ -31,6 +32,7 @@ const AddPostForm = () => {
     const files = fileData;
     const uploadPromises = [];
     const fileDownloadURLs = [];
+    setFormLoading(true);
     Array.from(files).forEach((file) => {
       const storageRef = ref(storage, `/posts/${tempUserId}/${file.name}`);
       const uploadTask = uploadBytesResumable(storageRef, file);
@@ -88,6 +90,8 @@ const AddPostForm = () => {
         type: 'error',
         msg: error?.data?.message || error.error || 'Unexpected Error Occurred',
       });
+    } finally {
+      setFormLoading(false);
     }
   };
   const addNewFiles = (event) => {
@@ -166,7 +170,7 @@ const AddPostForm = () => {
             />
           </div>
           <Button className="bg-red-400 hover:bg-red-500 mt-8" type="submit">
-            {addPostLoading ? <Loader /> : 'Add Post'}
+            {addPostLoading || formLoading ? <Loader /> : 'Add Post'}
           </Button>
         </form>
       </div>

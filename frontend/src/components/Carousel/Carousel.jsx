@@ -6,6 +6,7 @@ import { Button } from 'flowbite-react';
 
 const Carousel = ({ postsData }) => {
   const [currentPostIndex, setCurrentPostIndex] = useState(0);
+  const [selectedOption, setSelectedOption] = useState(null);
   const imagesData = postsData;
   const handlePrevious = () => {
     setCurrentPostIndex((prevIndex) =>
@@ -17,6 +18,9 @@ const Carousel = ({ postsData }) => {
     setCurrentPostIndex((prevIndex) =>
       prevIndex === imagesData.length - 1 ? 0 : prevIndex + 1,
     );
+  };
+  const handleOptionChange = (event) => {
+    setSelectedOption(event.target.value);
   };
   return (
     <>
@@ -74,18 +78,39 @@ const Carousel = ({ postsData }) => {
               className="md:mr-4 mr-2 flex flex-col md:gap-2 gap-1"
             >
               <span>1</span>
-              <input type="radio" id="naw1" name="naw" />
+              <input
+                type="radio"
+                id="naw1"
+                name="naw"
+                value="1"
+                checked={selectedOption === '1'}
+                onChange={handleOptionChange}
+              />
             </label>
             <label
               htmlFor="naw2"
               className="md:mr-4 mr-2 flex flex-col md:gap-2 gap-1"
             >
               <span>2</span>
-              <input type="radio" id="naw2" name="naw" />
+              <input
+                type="radio"
+                id="naw2"
+                name="naw"
+                value="2"
+                checked={selectedOption === '2'}
+                onChange={handleOptionChange}
+              />
             </label>
             <label htmlFor="naw3" className="flex flex-col md:gap-2 gap-1">
               <span>3</span>
-              <input type="radio" id="naw3" name="naw" />
+              <input
+                type="radio"
+                id="naw3"
+                name="naw"
+                value="3"
+                checked={selectedOption === '3'}
+                onChange={handleOptionChange}
+              />
             </label>
           </div>
         </div>
@@ -98,18 +123,39 @@ const Carousel = ({ postsData }) => {
               className="md:mr-4 mr-2 flex flex-col md:gap-2 gap-1"
             >
               <span>4</span>
-              <input type="radio" id="or1" name="or" />
+              <input
+                type="radio"
+                id="or1"
+                name="or"
+                value="4"
+                checked={selectedOption === '4'}
+                onChange={handleOptionChange}
+              />
             </label>
             <label
               htmlFor="or2"
               className="md:mr-4 mr-2 flex flex-col md:gap-2 gap-1"
             >
               <span>5</span>
-              <input type="radio" id="or2" name="or" />
+              <input
+                type="radio"
+                id="or2"
+                name="or"
+                value="5"
+                checked={selectedOption === '5'}
+                onChange={handleOptionChange}
+              />
             </label>
             <label htmlFor="or3" className="flex flex-col md:gap-2 gap-1">
               <span>6</span>
-              <input type="radio" id="or3" name="or" />
+              <input
+                type="radio"
+                id="or3"
+                name="or"
+                value="6"
+                checked={selectedOption === '6'}
+                onChange={handleOptionChange}
+              />
             </label>
           </div>
         </div>
@@ -122,25 +168,53 @@ const Carousel = ({ postsData }) => {
               className="md:mr-4 mr-2 flex flex-col md:gap-2 gap-1"
             >
               <span>7</span>
-              <input type="radio" id="smash1" name="smash" />
+              <input
+                type="radio"
+                id="smash1"
+                name="smash"
+                value="7"
+                checked={selectedOption === '7'}
+                onChange={handleOptionChange}
+              />
             </label>
             <label
               htmlFor="smash2"
               className="md:mr-4 mr-2 flex flex-col md:gap-2 gap-1"
             >
               <span>8</span>
-              <input type="radio" id="smash2" name="smash" />
+              <input
+                type="radio"
+                id="smash2"
+                name="smash"
+                value="8"
+                checked={selectedOption === '8'}
+                onChange={handleOptionChange}
+              />
             </label>
             <label
               htmlFor="smash3"
               className="md:mr-4 mr-2 flex flex-col md:gap-2 gap-1"
             >
               <span>9</span>
-              <input type="radio" id="smash3" name="smash" />
+              <input
+                type="radio"
+                id="smash3"
+                name="smash"
+                value="9"
+                checked={selectedOption === '9'}
+                onChange={handleOptionChange}
+              />
             </label>
             <label htmlFor="smash3" className="flex flex-col md:gap-2 gap-1">
               <span>10</span>
-              <input type="radio" id="smash3" name="smash" />
+              <input
+                type="radio"
+                id="smash3"
+                name="smash"
+                value="10"
+                checked={selectedOption === '10'}
+                onChange={handleOptionChange}
+              />
             </label>
           </div>
         </div>

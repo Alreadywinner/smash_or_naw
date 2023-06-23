@@ -108,6 +108,10 @@ const AddPostForm = () => {
       });
     } finally {
       setFormLoading(false);
+      setSelectedOption('');
+      setFileData([]);
+      postNameRef.current.value = '';
+      fileInputRef.current.value = '';
     }
   };
   const addNewFiles = (event) => {

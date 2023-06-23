@@ -1,13 +1,21 @@
 import 'react-responsive-carousel/lib/styles/carousel.min.css'; // requires a loader
 import { Carousel as FlowCarousel } from 'react-responsive-carousel';
 import PropTypes from 'prop-types';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button } from 'flowbite-react';
 
 const Carousel = ({ postsData }) => {
   const [currentPostIndex, setCurrentPostIndex] = useState(0);
-  const [selectedOption, setSelectedOption] = useState(null);
+  const [selectedOption, setSelectedOption] = useState('');
+  const ratingArray = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'];
+  const firstThreeElements = ratingArray.slice(0, 3);
+  const secondThreeElements = ratingArray.slice(3, 6);
+  const thirdFourElements = ratingArray.slice(6, 10);
   const imagesData = postsData;
+
+  useEffect(() => {
+    setSelectedOption(postsData[currentPostIndex].post_rating);
+  }, [postsData, currentPostIndex]);
   const handlePrevious = () => {
     setCurrentPostIndex((prevIndex) =>
       prevIndex === 0 ? imagesData.length - 1 : prevIndex - 1,
@@ -18,9 +26,6 @@ const Carousel = ({ postsData }) => {
     setCurrentPostIndex((prevIndex) =>
       prevIndex === imagesData.length - 1 ? 0 : prevIndex + 1,
     );
-  };
-  const handleOptionChange = (event) => {
-    setSelectedOption(event.target.value);
   };
   return (
     <>
@@ -73,149 +78,69 @@ const Carousel = ({ postsData }) => {
         <div className="text-center md:mr-20 mr-5">
           <h2 className="text-xl font-bold uppercase">Naw</h2>
           <div className="flex items-center mt-2">
-            <label
-              htmlFor="naw1"
-              className="md:mr-4 mr-2 flex flex-col md:gap-2 gap-1"
-            >
-              <span>1</span>
-              <input
-                type="radio"
-                id="naw1"
-                name="naw"
-                value="1"
-                checked={selectedOption === '1'}
-                onChange={handleOptionChange}
-              />
-            </label>
-            <label
-              htmlFor="naw2"
-              className="md:mr-4 mr-2 flex flex-col md:gap-2 gap-1"
-            >
-              <span>2</span>
-              <input
-                type="radio"
-                id="naw2"
-                name="naw"
-                value="2"
-                checked={selectedOption === '2'}
-                onChange={handleOptionChange}
-              />
-            </label>
-            <label htmlFor="naw3" className="flex flex-col md:gap-2 gap-1">
-              <span>3</span>
-              <input
-                type="radio"
-                id="naw3"
-                name="naw"
-                value="3"
-                checked={selectedOption === '3'}
-                onChange={handleOptionChange}
-              />
-            </label>
+            {firstThreeElements &&
+              firstThreeElements.map((element) => (
+                <label
+                  key={element}
+                  htmlFor="naw1"
+                  className="md:mr-4 mr-2 flex flex-col md:gap-2 gap-1"
+                >
+                  <span>{element}</span>
+                  <input
+                    type="radio"
+                    id="naw1"
+                    name="naw"
+                    checked={selectedOption === element ? true : false}
+                    disabled={selectedOption === element ? false : true}
+                  />
+                </label>
+              ))}
           </div>
         </div>
         {/* Heading 'Or' */}
         <div className="text-center md:mr-20 mr-5">
           <h2 className="text-xl font-bold uppercase">Or</h2>
           <div className="flex items-center mt-2">
-            <label
-              htmlFor="or1"
-              className="md:mr-4 mr-2 flex flex-col md:gap-2 gap-1"
-            >
-              <span>4</span>
-              <input
-                type="radio"
-                id="or1"
-                name="or"
-                value="4"
-                checked={selectedOption === '4'}
-                onChange={handleOptionChange}
-              />
-            </label>
-            <label
-              htmlFor="or2"
-              className="md:mr-4 mr-2 flex flex-col md:gap-2 gap-1"
-            >
-              <span>5</span>
-              <input
-                type="radio"
-                id="or2"
-                name="or"
-                value="5"
-                checked={selectedOption === '5'}
-                onChange={handleOptionChange}
-              />
-            </label>
-            <label htmlFor="or3" className="flex flex-col md:gap-2 gap-1">
-              <span>6</span>
-              <input
-                type="radio"
-                id="or3"
-                name="or"
-                value="6"
-                checked={selectedOption === '6'}
-                onChange={handleOptionChange}
-              />
-            </label>
+            {secondThreeElements &&
+              secondThreeElements.map((element) => (
+                <label
+                  key={element}
+                  htmlFor="naw1"
+                  className="md:mr-4 mr-2 flex flex-col md:gap-2 gap-1"
+                >
+                  <span>{element}</span>
+                  <input
+                    type="radio"
+                    id="naw1"
+                    name="naw"
+                    checked={selectedOption === element ? true : false}
+                    disabled={selectedOption === element ? false : true}
+                  />
+                </label>
+              ))}
           </div>
         </div>
         {/* Heading 'Smash' */}
         <div className="text-center md:mr-20 mr-5">
           <h2 className="text-xl font-bold uppercase">Smash</h2>
           <div className="flex items-center mt-2">
-            <label
-              htmlFor="smash1"
-              className="md:mr-4 mr-2 flex flex-col md:gap-2 gap-1"
-            >
-              <span>7</span>
-              <input
-                type="radio"
-                id="smash1"
-                name="smash"
-                value="7"
-                checked={selectedOption === '7'}
-                onChange={handleOptionChange}
-              />
-            </label>
-            <label
-              htmlFor="smash2"
-              className="md:mr-4 mr-2 flex flex-col md:gap-2 gap-1"
-            >
-              <span>8</span>
-              <input
-                type="radio"
-                id="smash2"
-                name="smash"
-                value="8"
-                checked={selectedOption === '8'}
-                onChange={handleOptionChange}
-              />
-            </label>
-            <label
-              htmlFor="smash3"
-              className="md:mr-4 mr-2 flex flex-col md:gap-2 gap-1"
-            >
-              <span>9</span>
-              <input
-                type="radio"
-                id="smash3"
-                name="smash"
-                value="9"
-                checked={selectedOption === '9'}
-                onChange={handleOptionChange}
-              />
-            </label>
-            <label htmlFor="smash3" className="flex flex-col md:gap-2 gap-1">
-              <span>10</span>
-              <input
-                type="radio"
-                id="smash3"
-                name="smash"
-                value="10"
-                checked={selectedOption === '10'}
-                onChange={handleOptionChange}
-              />
-            </label>
+            {thirdFourElements &&
+              thirdFourElements.map((element) => (
+                <label
+                  key={element}
+                  htmlFor="naw1"
+                  className="md:mr-4 mr-2 flex flex-col md:gap-2 gap-1"
+                >
+                  <span>{element}</span>
+                  <input
+                    type="radio"
+                    id="naw1"
+                    name="naw"
+                    checked={selectedOption === element ? true : false}
+                    disabled={selectedOption === element ? false : true}
+                  />
+                </label>
+              ))}
           </div>
         </div>
       </div>

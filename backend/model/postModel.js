@@ -16,7 +16,7 @@ const adminSchema = mongoose.Schema(
       },
     },
     post_rating: {
-      type: Number,
+      type: String,
       required: true,
     },
   },

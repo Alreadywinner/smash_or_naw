@@ -36,6 +36,7 @@ const Ad = ({ adsData }) => {
       alt="..."
       className="h-full w-full object-cover rounded cursor-pointer"
       onClick={handleImageClick}
+      loading="lazy"
     />
   );
 };

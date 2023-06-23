@@ -15,6 +15,10 @@ const adminSchema = mongoose.Schema(
         },
       },
     },
+    post_rating: {
+      type: Number,
+      required: true,
+    },
   },
   {
     timestamps: true,

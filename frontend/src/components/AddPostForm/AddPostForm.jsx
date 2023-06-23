@@ -88,6 +88,7 @@ const AddPostForm = () => {
         const res = await addPost({
           post_name,
           posts_data: fileDownloadURLs,
+          post_rating: selectedOption,
         }).unwrap();
         setShowToast({
           visible: true,

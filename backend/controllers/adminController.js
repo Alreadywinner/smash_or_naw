@@ -38,15 +38,24 @@ const adminLogout = asyncHandler(async (req, res) => {
 // @route   POST /api/admin/post
 // @access  Private
 const addPost = asyncHandler(async (req, res) => {
-  const { post_name, posts_data } = req.body;
+  const { post_name, posts_data, post_rating } = req.body;
   const postExist = await Post.findOne({ post_name });
   if (postExist) {
     res.status(400);
     throw new Error("post already exist");
   }
+  if (
+    post_name === "" ||
+    (posts_data && posts_data.length === 0) ||
+    post_rating === ""
+  ) {
+    res.status(400);
+    throw new Error("All required fields must be provided");
+  }
   const post = await Post.create({
     post_name,
     posts_data,
+    post_rating,
   });
   if (post) {
     res.status(201).json({

@@ -9,7 +9,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getCookie } from '../../utils/readCookie';
 
 const AdminLogin = () => {
-  const [toast, setToast] = useState('');
+  const [showToast, setShowToast] = useState({
+    visible: false,
+    type: '',
+    msg: '',
+  });
   const adminEmail = useRef('');
   const adminPassword = useRef('');
   const dispatch = useDispatch();
@@ -21,7 +25,11 @@ const AdminLogin = () => {
     const email = adminEmail.current.value.trim();
     const password = adminPassword.current.value.trim();
     if (email === '' && password === '') {
-      setToast('Please enter all entities');
+      setShowToast({
+        visible: true,
+        type: 'error',
+        msg: 'Please enter all entities',
+      });
       return;
     }
     try {
@@ -29,16 +37,28 @@ const AdminLogin = () => {
       dispatch(setCredentials({ ...res }));
     } catch (err) {
       console.log('In error', err);
-      setToast(err?.data?.message || err.error || 'Unexpected Error Occurred');
+      setShowToast({
+        visible: true,
+        type: 'error',
+        msg: err?.data?.message || err.error || 'Unexpected Error Occurred',
+      });
     }
   };
   const onToastClick = () => {
-    setToast('');
+    setShowToast({
+      visible: false,
+      type: '',
+      msg: '',
+    });
   };
   return (
     <>
-      {toast !== '' && (
-        <Toast message={toast} onClose={onToastClick} error={true} />
+      {showToast !== '' && (
+        <Toast
+          message={showToast.msg}
+          onClose={onToastClick}
+          type={showToast.type}
+        />
       )}
       <div className="h-screen flex flex-col items-center justify-center">
         <p className="text-3xl font-bold mt-10">Login For Admin</p>

@@ -14,7 +14,11 @@ const Login = ({ onClose, onSignUpClick, visible }) => {
   const emailRef = useRef();
   const passwordRef = useRef();
 
-  const [showToast, setShowToast] = useState('');
+  const [showToast, setShowToast] = useState({
+    visible: false,
+    type: '',
+    msg: '',
+  });
 
   const [login, { isLoading }] = useLoginMutation();
 
@@ -31,7 +35,11 @@ const Login = ({ onClose, onSignUpClick, visible }) => {
     const email = emailRef.current.value.trim();
     const password = passwordRef.current.value.trim();
     if (password === '') {
-      setShowToast(`Passwords don't match`);
+      setShowToast({
+        visible: true,
+        type: 'error',
+        msg: `Passwords don't match`,
+      });
       return;
     }
     if (email) {
@@ -39,7 +47,11 @@ const Login = ({ onClose, onSignUpClick, visible }) => {
         // eslint-disable-next-line no-useless-escape
         /^(([^<>()\[\]\\.,;:\s@”]+(\.[^<>()\[\]\\.,;:\s@”]+)*)|(“.+”))@((\[[0–9]{1,3}\.[0–9]{1,3}\.[0–9]{1,3}\.[0–9]{1,3}])|(([a-zA-Z\-0–9]+\.)+[a-zA-Z]{2,}))$/;
       if (!emailReg.test(email)) {
-        setShowToast(`Please Enter a valid email`);
+        setShowToast({
+          visible: true,
+          type: 'error',
+          msg: `Please Enter a valid email`,
+        });
         return;
       }
     }
@@ -50,19 +62,30 @@ const Login = ({ onClose, onSignUpClick, visible }) => {
       navigate('/rating');
       dispatch(setCredentials({ ...res }));
     } catch (err) {
-      console.log('In error');
-      setShowToast(err?.data?.message || err.error);
+      setShowToast({
+        visible: true,
+        type: 'error',
+        msg: err?.data?.message || err.error || 'Unexpected Error Occurred',
+      });
     }
   };
 
   const onToastClick = () => {
-    setShowToast('');
+    setShowToast({
+      visible: false,
+      type: '',
+      msg: '',
+    });
   };
 
   return (
     <Modal show={visible} onClose={onClose}>
-      {showToast !== '' && (
-        <Toast message={showToast} onClose={onToastClick} error={true} />
+      {showToast.visible && (
+        <Toast
+          message={showToast.msg}
+          onClose={onToastClick}
+          type={showToast.type}
+        />
       )}
       <Modal.Header>Login</Modal.Header>
       <Modal.Body>

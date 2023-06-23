@@ -15,7 +15,11 @@ const SignUp = ({ onClose, onLoginClick, visible }) => {
   const passwordRef = useRef();
   const repeatPassRef = useRef();
   const nameRef = useRef();
-  const [showToast, setShowToast] = useState('');
+  const [showToast, setShowToast] = useState({
+    visible: false,
+    type: '',
+    msg: '',
+  });
 
   const [register, { isLoading }] = useRegisterMutation();
 
@@ -26,11 +30,19 @@ const SignUp = ({ onClose, onLoginClick, visible }) => {
     const repeatPass = repeatPassRef.current.value.trim();
     const name = nameRef.current.value.trim();
     if (repeatPass !== password) {
-      setShowToast(`Passwords don't match`);
+      setShowToast({
+        visible: true,
+        type: 'error',
+        msg: `Passwords don't match`,
+      });
       return;
     }
     if (name === '') {
-      setShowToast(`Name cannot be empty`);
+      setShowToast({
+        visible: true,
+        type: 'error',
+        msg: `Name cannot be empty`,
+      });
       return;
     }
     if (email) {
@@ -39,7 +51,11 @@ const SignUp = ({ onClose, onLoginClick, visible }) => {
         /^(([^<>()\[\]\\.,;:\s@”]+(\.[^<>()\[\]\\.,;:\s@”]+)*)|(“.+”))@((\[[0–9]{1,3}\.[0–9]{1,3}\.[0–9]{1,3}\.[0–9]{1,3}])|(([a-zA-Z\-0–9]+\.)+[a-zA-Z]{2,}))$/;
 
       if (email === '' || !emailReg.test(email)) {
-        setShowToast(`Please Enter a valid email`);
+        setShowToast({
+          visible: true,
+          type: 'error',
+          msg: `Please Enter a valid email`,
+        });
         return;
       }
     }
@@ -50,18 +66,26 @@ const SignUp = ({ onClose, onLoginClick, visible }) => {
       navigate('/rating');
       dispatch(setCredentials({ ...res }));
     } catch (err) {
-      setShowToast(err?.data?.message || err.error);
+      setShowToast({
+        visible: true,
+        type: 'error',
+        msg: err?.data?.message || err.error,
+      });
     }
   };
 
   const onToastClick = () => {
-    setShowToast('');
+    setShowToast({ visible: false, type: '', msg: '' });
   };
 
   return (
     <Modal show={visible} onClose={onClose}>
       {showToast !== '' && (
-        <Toast message={showToast} onClose={onToastClick} error={true} />
+        <Toast
+          message={showToast.msg}
+          onClose={onToastClick}
+          type={showToast.type}
+        />
       )}
       <Modal.Header>Sign Up</Modal.Header>
       <Modal.Body>

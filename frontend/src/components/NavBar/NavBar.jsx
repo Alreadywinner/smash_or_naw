@@ -12,7 +12,11 @@ const NavBar = () => {
   const { userInfo } = useSelector((state) => state.auth);
   const myCookieValue = getCookie('jwt');
   const [displayAuth, setDisplayAuth] = useState(false);
-  const [showToast, setShowToast] = useState('');
+  const [showToast, setShowToast] = useState({
+    visible: false,
+    type: '',
+    msg: '',
+  });
 
   const navigate = useNavigate();
 
@@ -25,16 +29,28 @@ const NavBar = () => {
       dispatch(clearCredentials());
       navigate('/');
     } catch (err) {
-      setShowToast(err?.data?.message || err.error);
+      setShowToast({
+        visible: true,
+        type: 'error',
+        msg: err?.data?.message || err.error,
+      });
     }
   };
   const onToastClick = () => {
-    setShowToast('');
+    setShowToast({
+      visible: false,
+      type: '',
+      msg: '',
+    });
   };
   return (
     <>
-      {showToast !== '' && (
-        <Toast message={showToast} onClose={onToastClick} error={true} />
+      {showToast && (
+        <Toast
+          message={showToast.msg}
+          onClose={onToastClick}
+          type={showToast.type}
+        />
       )}
       {displayAuth && <Auth />}
       <Navbar fluid={true} rounded={true}>

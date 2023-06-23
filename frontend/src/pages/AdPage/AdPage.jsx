@@ -151,8 +151,7 @@ const AdPage = () => {
           <Toast
             message={showToast.msg}
             onClose={onToastClick}
-            error={showToast.type === 'error' && true}
-            success={showToast.type === 'success' && true}
+            type={showToast.type}
           />
         )}
         <p className="text-3xl font-bold mt-10">Add a New Ad</p>

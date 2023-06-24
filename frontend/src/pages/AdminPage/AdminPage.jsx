@@ -53,7 +53,7 @@ const AdminLogin = () => {
   };
   return (
     <>
-      {showToast !== '' && (
+      {showToast.visible && (
         <Toast
           message={showToast.msg}
           onClose={onToastClick}

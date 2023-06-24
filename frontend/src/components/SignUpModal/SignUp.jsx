@@ -80,7 +80,7 @@ const SignUp = ({ onClose, onLoginClick, visible }) => {
 
   return (
     <Modal show={visible} onClose={onClose}>
-      {showToast !== '' && (
+      {showToast.visible && (
         <Toast
           message={showToast.msg}
           onClose={onToastClick}

@@ -45,7 +45,7 @@ const NavBar = () => {
   };
   return (
     <>
-      {showToast && (
+      {showToast.visible && (
         <Toast
           message={showToast.msg}
           onClose={onToastClick}

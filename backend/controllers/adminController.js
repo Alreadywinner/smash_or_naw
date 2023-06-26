@@ -67,7 +67,50 @@ const addPost = asyncHandler(async (req, res) => {
   }
 });
 
-// @desc    Add posts
+// @desc   Delete posts
+// @route  DELETE /api/admin/post
+// @access Private
+
+const deletePost = asyncHandler(async (req, res) => {
+  const { post } = req.body;
+  try {
+    const deletedPost = await Post.deleteOne({ _id: post._id });
+
+    if (deletedPost.deletedCount === 0) {
+      // If the document is not found, handle accordingly
+      res.status(404);
+      throw new Error("Post not found");
+    }
+    return res.status(200).json({ message: "Post deleted successfully" });
+  } catch (error) {
+    res.status(500);
+    throw new Error("Post cannot be deleted");
+  }
+});
+
+// @desc   Edit posts
+// @route  PATCH /api/admin/post
+// @access Private
+
+const editPost = asyncHandler(async (req, res) => {
+  const { post } = req.body;
+  try {
+    const updatedPost = await Post.updateOne({ _id: post._id }, post);
+
+    if (updatedPost.nModified === 0) {
+      // No document matched the provided ID
+      res.status(404);
+      throw new Error("Post not found");
+    }
+
+    return res.status(200).json({ message: "Post updated successfully" });
+  } catch (error) {
+    res.status(500);
+    throw new Error("Post cannot be deleted");
+  }
+});
+
+// @desc    Add Ads
 // @route   POST /api/admin/ad
 // @access  Private
 const addAds = asyncHandler(async (req, res) => {
@@ -91,4 +134,4 @@ const addAds = asyncHandler(async (req, res) => {
   }
 });
 
-export { adminLogin, adminLogout, addAds, addPost };
+export { adminLogin, adminLogout, addAds, addPost, deletePost, editPost };

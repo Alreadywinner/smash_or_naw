@@ -30,6 +30,7 @@ export const userApiSlice = apiSlice.injectEndpoints({
         url: `${USERS_URL}/posts`,
         method: 'GET',
       }),
+      providesTags: ['User'],
     }),
     fetchAllAds: builder.query({
       query: () => ({

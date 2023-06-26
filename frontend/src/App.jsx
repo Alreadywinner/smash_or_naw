@@ -8,6 +8,7 @@ import ContactUs from './pages/ContactUs/ContactUs';
 import PrivateRoute from './components/PrivateRoute/PrivateRoute';
 import AdminPage from './pages/AdminPage/AdminPage';
 import AdPage from './pages/AdPage/AdPage';
+import PostPage from './pages/PostPage/PostPage';
 
 function App() {
   const location = useLocation();
@@ -21,6 +22,7 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/admin/login" element={<AdminPage />} />
         <Route path="/admin/Ad" element={<AdPage />} />
+        <Route path="/admin/posts" element={<PostPage />} />
         <Route path="" element={<PrivateRoute />}>
           <Route path="/rating" element={<RatingPage />} />
         </Route>

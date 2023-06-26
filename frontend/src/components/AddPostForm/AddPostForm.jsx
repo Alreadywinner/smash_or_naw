@@ -160,7 +160,7 @@ const AddPostForm = () => {
       <div className="flex justify-end gap-5 mt-5 mr-5">
         <Button
           className="bg-red-400 text-white hover:bg-red-500"
-          // onClick={() => navigate('/admin/Ad')}
+          onClick={() => navigate('/admin/posts')}
         >
           View All Posts
         </Button>

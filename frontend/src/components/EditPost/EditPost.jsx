@@ -81,7 +81,7 @@ const EditPost = ({ visible, onClose, postData }) => {
         setShowToast({
           visible: true,
           type: 'success',
-          msg: 'File deleted successfully',
+          msg: 'File edited successfully',
         });
       }
     } catch (error) {
@@ -145,7 +145,7 @@ const EditPost = ({ visible, onClose, postData }) => {
                       className="bg-red-400 text-white hover:bg-red-500"
                       onClick={() => removeSelectedPost(post)}
                     >
-                      {loading ? <Loader /> : 'Delete'}
+                      Delete
                     </Button>
                   </div>
                 );
@@ -183,9 +183,9 @@ const EditPost = ({ visible, onClose, postData }) => {
             <Button
               className="bg-blue-700 text-white hover:bg-blue-400"
               type="submit"
-              disabled={isLoading}
+              disabled={loading || isLoading}
             >
-              {isLoading ? <Loader /> : 'Update'}
+              {loading || isLoading ? <Loader /> : 'Update'}
             </Button>
           </div>
         </form>

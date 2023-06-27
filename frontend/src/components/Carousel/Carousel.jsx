@@ -14,7 +14,9 @@ const Carousel = ({ postsData }) => {
   const imagesData = postsData;
 
   useEffect(() => {
-    setSelectedOption(postsData[currentPostIndex].post_rating);
+    if (postsData && postsData?.length > 0) {
+      setSelectedOption(postsData[currentPostIndex]?.post_rating);
+    }
   }, [postsData, currentPostIndex]);
   const handlePrevious = () => {
     setCurrentPostIndex((prevIndex) =>
@@ -37,7 +39,9 @@ const Carousel = ({ postsData }) => {
           Previous Post
         </Button>
         <h1 className="text-3xl font-bold">
-          {imagesData[currentPostIndex]?.post_name}
+          {imagesData &&
+            imagesData?.length > 0 &&
+            imagesData[currentPostIndex]?.post_name}
         </h1>
         <Button
           className="bg-red-400 text-white hover:bg-red-500"
@@ -47,7 +51,7 @@ const Carousel = ({ postsData }) => {
         </Button>
       </div>
       <FlowCarousel showThumbs={false}>
-        {imagesData &&
+        {imagesData && imagesData?.length > 0 ? (
           imagesData[currentPostIndex]?.posts_data?.map((element) => {
             if (element.includes('.mp4') || element.includes('.webm')) {
               return (
@@ -71,7 +75,12 @@ const Carousel = ({ postsData }) => {
                 </div>
               );
             }
-          })}
+          })
+        ) : (
+          <div className="h-96 w-full">
+            <p className="text-xl font-bold">There Are No posts added yet</p>
+          </div>
+        )}
       </FlowCarousel>
       <div className="flex items-center justify-center p-5">
         {/* Heading 'Naw' */}

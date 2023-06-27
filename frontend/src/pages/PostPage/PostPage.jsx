@@ -5,8 +5,11 @@ import { useFetchAllPostsQuery } from '../../redux/slices/userApiSlice';
 import { useState } from 'react';
 import { useDeletePostMutation } from '../../redux/slices/adminSlice';
 import Toast from '../../components/Toast/Toast';
+import { Button } from 'flowbite-react';
+import { useNavigate } from 'react-router-dom';
 
 const PostPage = () => {
+  const navigate = useNavigate();
   const { data: postsData, isLoading: postsLoading } = useFetchAllPostsQuery();
   const [deletePost, { isLoading: deleteLoading }] = useDeletePostMutation();
   const storage = getStorage();
@@ -67,6 +70,14 @@ const PostPage = () => {
           type={showToast.type}
         />
       )}
+      <div className="flex justify-end gap-5 mt-5 mr-5">
+        <Button
+          className="bg-red-400 text-white hover:bg-red-500"
+          onClick={() => navigate(-1)}
+        >
+          View All Posts
+        </Button>
+      </div>
       <div className="flex items-center justify-center flex-col mt-10 mr-3 ml-3">
         <p className="text-3xl font-bold mb-10">All Posts</p>
         <div className="flex gap-5">

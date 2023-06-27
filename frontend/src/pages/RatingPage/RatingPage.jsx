@@ -17,7 +17,7 @@ const RatingPage = () => {
     <div className="flex flex-col gap-5 p-4">
       <div className="flex md:flex-row flex-col gap-4">
         <div className="md:w-4/5 w-100 bg-white-500 shadow-lg shadow-white-500/50">
-          <Carousel postsData={postsData.allPosts} />
+          <Carousel postsData={postsData?.allPosts} />
         </div>
         <div className="md:w-1/5 w-100 bg-white-500 shadow-lg shadow-white-500/50 rounded">
           <Ad adsData={adsData?.allAds} />

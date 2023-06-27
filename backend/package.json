@@ -6,8 +6,7 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "server": "node server",
-    "start": "nodemon server"
+    "start": "node server"
   },
   "keywords": [],
   "author": "",

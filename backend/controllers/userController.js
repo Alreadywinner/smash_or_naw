@@ -2,6 +2,7 @@ import asyncHandler from "express-async-handler";
 import User from "../model/userModel.js";
 import Posts from "../model/postModel.js";
 import Ads from "../model/adModel.js";
+import Comments from "../model/commentModel.js";
 import generateToken from "../utils/generateToken.js";
 // @desc    Auth user & get token
 // @route   POST /api/users/auth
@@ -125,12 +126,77 @@ const fetchAllAds = asyncHandler(async (req, res) => {
   }
 });
 
+// @desc    fetch all Comments
+// @route   GET /api/users/comments
+// @access  Private
+const fetchAllComments = asyncHandler(async (req, res) => {
+  // const {}
+  const allComments = await Comments.find({})
+    .populate("author", "name email")
+    .populate("post_id", "_id")
+    .select("comment createdAt author _id name email");
+  if (allComments && allComments.length > 0) {
+    return res.status(200).json({ allComments });
+  } else {
+    res.status(400);
+    throw new Error("No Comments to Fetch");
+  }
+});
+
+// @desc    add new Comment
+// @route   POST /api/users/comments
+// @access  Private
+const addNewComment = asyncHandler(async (req, res) => {
+  const { author, post_id, comment } = req.body;
+  const savedComment = await Comments.create({
+    author: author, // Assign the user ID of the author
+    comment: comment,
+    post_id: post_id,
+  });
+
+  if (savedComment) {
+    res.status(201).json({
+      msg: "Comment added successfully",
+      comment: savedComment,
+    });
+  } else {
+    res.status(400);
+    throw new Error("Invalid comment data");
+  }
+});
+
+// @desc    delete comment
+// @route   DELETE /api/users/comments
+// @access  Private
+const deleteComment = asyncHandler(async (req, res) => {
+  const commentId = req.body.commentId; // Assuming the comment ID is passed in the request body
+
+  const deletedComment = await Comments.deleteOne({ _id: commentId });
+
+  if (deletedComment.deletedCount > 0) {
+    // Comment successfully deleted
+    return res.status(200).json({ message: "Comment deleted successfully" });
+  } else {
+    // No comment found with the provided ID
+    res.status(400);
+    throw new Error("No comment found to delete");
+  }
+});
+
 export {
+  // auth Users
   authUser,
   registerUser,
   logoutUser,
+  //User Profile
   getUserProfile,
   updateUserProfile,
+  //Posts
   fetchAllPosts,
+  //Ads
   fetchAllAds,
+  //Comments
+  fetchAllComments,
+  addNewComment,
+  deleteComment,
 };

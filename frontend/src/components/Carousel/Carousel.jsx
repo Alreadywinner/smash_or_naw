@@ -4,8 +4,7 @@ import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 import { Button } from 'flowbite-react';
 
-const Carousel = ({ postsData }) => {
-  const [currentPostIndex, setCurrentPostIndex] = useState(0);
+const Carousel = ({ postsData, currentPostIndex, setCurrentPostIndex }) => {
   const [selectedOption, setSelectedOption] = useState('');
   const ratingArray = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'];
   const firstThreeElements = ratingArray.slice(0, 3);
@@ -159,6 +158,8 @@ const Carousel = ({ postsData }) => {
 
 Carousel.propTypes = {
   postsData: PropTypes.array,
+  currentPostIndex: PropTypes.number,
+  setCurrentPostIndex: PropTypes.func,
 };
 
 export default Carousel;

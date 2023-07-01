@@ -130,10 +130,9 @@ const fetchAllAds = asyncHandler(async (req, res) => {
 // @route   GET /api/users/comments
 // @access  Private
 const fetchAllComments = asyncHandler(async (req, res) => {
-  // const {}
-  const allComments = await Comments.find({})
+  const { id } = req.params;
+  const allComments = await Comments.find({ post_id: id })
     .populate("author", "name email")
-    .populate("post_id", "_id")
     .select("comment createdAt author _id name email");
   if (allComments && allComments.length > 0) {
     return res.status(200).json({ allComments });

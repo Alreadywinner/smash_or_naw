@@ -1,12 +1,12 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: "",
+  baseUrl: '',
 });
 
 export const apiSlice = createApi({
   baseQuery,
   // this tagTypes is used to specify to cache or not
-  tagTypes: ["User"],
+  tagTypes: ['User', 'Comments'],
   endpoints: (builder) => ({}),
 });

@@ -32,6 +32,29 @@ export const userApiSlice = apiSlice.injectEndpoints({
       }),
       providesTags: ['User'],
     }),
+    fetchCurrentPostComment: builder.query({
+      query: (id) => ({
+        url: `${USERS_URL}/comments/${id}`,
+        method: 'GET',
+      }),
+      // providesTags: ['Comments'],
+    }),
+    addNewPostComment: builder.mutation({
+      query: (data) => ({
+        url: `${USERS_URL}/comments`,
+        method: 'POST',
+        body: data,
+      }),
+      // invalidatesTags: ['Comments'],
+    }),
+    deletePostComment: builder.mutation({
+      query: (data) => ({
+        url: `${USERS_URL}/comments`,
+        method: 'DELETE',
+        body: data,
+        // invalidatesTags: ['Comments'],
+      }),
+    }),
     fetchAllAds: builder.query({
       query: () => ({
         url: `${USERS_URL}/ads`,
@@ -46,5 +69,8 @@ export const {
   useLogoutMutation,
   useRegisterMutation,
   useFetchAllPostsQuery,
+  useAddNewPostCommentMutation,
+  useDeletePostCommentMutation,
+  useFetchCurrentPostCommentQuery,
   useFetchAllAdsQuery,
 } = userApiSlice;

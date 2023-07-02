@@ -136,6 +136,8 @@ const fetchAllComments = asyncHandler(async (req, res) => {
     .select("comment createdAt author _id name email");
   if (allComments && allComments.length > 0) {
     return res.status(200).json({ allComments });
+  } else if (allComments && allComments.length === 0) {
+    return res.status(200).json({ allComments: {} });
   } else {
     res.status(400);
     throw new Error("No Comments to Fetch");

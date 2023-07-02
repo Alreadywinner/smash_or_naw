@@ -3,13 +3,14 @@ import useLocalStorage from '../../hooks/useLocalStorage';
 import PropTypes from 'prop-types';
 import {
   useAddNewPostCommentMutation,
+  useDeletePostCommentMutation,
   useFetchCurrentPostCommentQuery,
-} from '../../redux/slices/userApiSlice';
+} from '../../redux/slices/commentSlice';
 import Loader from '../Loader/Loader';
 import { convertToLocalAM_PM } from '../../utils/helpers';
 import Toast from '../Toast/Toast';
 
-const Comments = ({ currentPostIndex, currentPost }) => {
+const Comments = ({ currentPost }) => {
   const { value: userData } = useLocalStorage('userInfo');
   const newComment = useRef('');
   const post_id = currentPost._id;
@@ -22,10 +23,12 @@ const Comments = ({ currentPostIndex, currentPost }) => {
     useFetchCurrentPostCommentQuery(post_id);
   const [addNewPostComment, { isLoading: commentsAddLoading }] =
     useAddNewPostCommentMutation();
+  const [deletePostComment, { isLoading: commentsDeleteLoading }] =
+    useDeletePostCommentMutation();
   const saveComment = async () => {
     try {
       const res = await addNewPostComment({
-        post_id: currentPost._id,
+        post_id,
         author: userData._id,
         comment: newComment.current.value,
       }).unwrap();
@@ -44,8 +47,23 @@ const Comments = ({ currentPostIndex, currentPost }) => {
       });
     }
   };
-  const deleteComment = (commentId) => {
-    console.log('delete comment now', commentId);
+  const deleteComment = async (commentId) => {
+    try {
+      const res = await deletePostComment({ commentId }).unwrap();
+      if (res) {
+        setShowToast({
+          visible: true,
+          type: 'success',
+          msg: 'Comment deleted successfully',
+        });
+      }
+    } catch (err) {
+      setShowToast({
+        visible: true,
+        type: 'error',
+        msg: err?.data?.message || err.error || 'Unexpected Error Occurred',
+      });
+    }
   };
   const onToastClick = () => {
     setShowToast({
@@ -85,7 +103,7 @@ const Comments = ({ currentPostIndex, currentPost }) => {
                         className="text-sm text-gray-500 font-semibold hover:cursor-pointer"
                         onClick={() => deleteComment(element._id)}
                       >
-                        delete
+                        {commentsDeleteLoading ? <Loader /> : 'delete'}
                       </div>
                     </div>
                   </div>
@@ -124,7 +142,6 @@ const Comments = ({ currentPostIndex, currentPost }) => {
 };
 
 Comments.propTypes = {
-  currentPostIndex: PropTypes.number,
   currentPost: PropTypes.object.isRequired,
 };
 

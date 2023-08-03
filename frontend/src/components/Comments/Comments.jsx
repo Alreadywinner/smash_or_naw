@@ -25,7 +25,8 @@ const Comments = ({ currentPost }) => {
     useAddNewPostCommentMutation();
   const [deletePostComment, { isLoading: commentsDeleteLoading }] =
     useDeletePostCommentMutation();
-  const saveComment = async () => {
+  const saveComment = async (e) => {
+    e.preventDefault();
     try {
       const res = await addNewPostComment({
         post_id,
@@ -38,6 +39,7 @@ const Comments = ({ currentPost }) => {
           type: 'success',
           msg: 'Comment added successfully',
         });
+        newComment.current.value = '';
       }
     } catch (err) {
       setShowToast({

@@ -12,6 +12,7 @@ const RatingPage = () => {
   const { data: postsData, isLoading: postsLoading } = useFetchAllPostsQuery();
   const { data: adsData, isLoading: adsLoading } = useFetchAllAdsQuery();
   const [currentPostIndex, setCurrentPostIndex] = useState(0);
+  const currentPost = postsData?.allPosts[currentPostIndex];
 
   if (postsLoading || adsLoading) {
     return <Loader />;
@@ -31,7 +32,7 @@ const RatingPage = () => {
         </div>
       </div>
       <div className="h-1/5 mt-3 mb-3">
-        <Comments currentPost={postsData?.allPosts[currentPostIndex]} />
+        <Comments currentPost={currentPost} />
       </div>
     </div>
   );
